@@ -42,10 +42,10 @@
             to { opacity: 1; }
         }
 
-        /* 固定文字層 - 放在底部 */
-        .text-layer {
+        /* 固定文字與二維碼層 */
+        .bottom-layer {
             position: fixed;
-            bottom: 8vh;
+            bottom: 5vh;
             left: 0;
             width: 100vw;
             pointer-events: none;
@@ -57,6 +57,16 @@
             text-align: center;
             gap: 1rem;
             padding: 0 1rem;
+        }
+
+        /* 二維碼樣式 */
+        .qr-code {
+            width: 150px;
+            height: 150px;
+            border-radius: 10px;
+            /* 加上輕微陰影，讓二維碼更突出 */
+            box-shadow: 0 0 10px rgba(0,0,0,0.3);
+            pointer-events: auto; /* 讓用戶可以點擊/長按保存二維碼 */
         }
 
         /* 第一行：劇烈振動效果 */
@@ -97,6 +107,7 @@
             .shake-text { font-size: 1.8rem; }
             .muse-text { font-size: 1.5rem; }
             .vme-text { font-size: 1.3rem; }
+            .qr-code { width: 120px; height: 120px; }
         }
     </style>
 </head>
@@ -106,8 +117,11 @@
         <img src="Image_1777219587636_682 (3).webp" alt="背景畫作" class="bg-image">
     </div>
 
-    <!-- 底部固定文字層 -->
-    <div class="text-layer">
+    <!-- 底部固定文字與二維碼層 -->
+    <div class="bottom-layer">
+        <!-- 二維碼放在最上面，在畫和文字之間 -->
+        <img src="mm_facetoface_collect_qrcode_1777306294962_edit_4222158339459.png" alt="贊助二維碼" class="qr-code">
+        
         <div class="shake-text">啊啊啊啊啊啊沒錢啦！</div>
         <div class="muse-text">都給我去玩喵斯！</div>
         <div class="vme-text">順便V我50～</div>
