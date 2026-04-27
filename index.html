@@ -5,76 +5,57 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>阿巴阿巴</title>
     <style>
-        /* 關鍵修改：背景設置為可滾動，不自動縮放 */
         body {
             margin: 0;
-            padding: 20px;
+            padding: 0;
             min-height: 100vh;
-            /* 1. 改為不縮放、可滾動，完整顯示整張圖 */
-            background: url('bg.png') left top no-repeat;
-            background-size: auto;
-            background-color: #000;
+            background: url('bg.png') center center / cover no-repeat;
             font-family: sans-serif;
             color: white;
             text-align: center;
             position: relative;
-            /* 2. 允許水平滾動 */
-            overflow-x: auto;
         }
-
-        /* 提高畫的亮度：用濾鏡實現 */
-        body::before {
-            content: "";
-            position: fixed;
+        .overlay {
+            position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.25);
+            background-color: rgba(0, 0, 0, 0.5);
             z-index: 0;
-            pointer-events: none;
         }
-
-        /* 內容放在最上層 */
         .content {
             position: relative;
             z-index: 1;
-            padding-top: 50px;
-            white-space: nowrap;
+            padding-top: 100px;
         }
-
-        /* 縮小振動標題 */
         .shake-title {
-            font-size: 1.8em;
+            font-size: 3em;
             animation: shake 0.1s infinite;
-            text-shadow: 1px 1px 3px rgba(0,0,0,0.8);
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
         }
-
         @keyframes shake {
             0% { transform: translateX(0); }
-            25% { transform: translateX(-2px) rotate(-0.5deg); }
-            50% { transform: translateX(2px) rotate(0.5deg); }
-            75% { transform: translateX(-2px) rotate(-0.5deg); }
-            100% { transform: translateX(2px) rotate(0.5deg); }
+            25% { transform: translateX(-3px) rotate(-1deg); }
+            50% { transform: translateX(3px) rotate(1deg); }
+            75% { transform: translateX(-3px) rotate(-1deg); }
+            100% { transform: translateX(3px) rotate(1deg); }
         }
-
-        /* 縮小正文文字 */
         .text {
-            font-size: 1em;
-            margin: 10px 0;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
-        }
-
-        /* 縮小V我50文字 */
-        .vme50 {
             font-size: 1.5em;
+            margin: 20px 0;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.8);
+        }
+        .vme50 {
+            font-size: 2em;
             color: #ff4444;
             font-weight: bold;
-            text-shadow: 1px 1px 3px rgba(0,0,0,0.8);
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
         }
     </style>
 </head>
 <body>
+    <div class="overlay"></div>
     <div class="content">
         <h1 class="shake-title">阿巴阿巴阿巴阿巴阿巴阿巴阿巴阿巴</h1>
         <p class="text">阿巴阿巴阿巴阿巴阿巴阿巴阿巴阿巴阿巴阿巴阿巴阿巴阿巴阿巴</p>
