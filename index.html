@@ -1,67 +1,185 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh-TW">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>阿啊啊啊啊啊啊啊啊啊啊啊啊啊啊！！！！！！！！！！</title>
+    <title>沒錢啦！！！！！！！！！！</title>
     <style>
-        body {
+        /* 全局重置 */
+        * {
             margin: 0;
             padding: 0;
-            min-height: 100vh;
-            background: url('bg.png') center center / cover no-repeat;
-            font-family: sans-serif;
-            color: white;
-            text-align: center;
-            position: relative;
+            box-sizing: border-box;
         }
-        .overlay {
-            position: absolute;
+
+        body {
+            /* 禁止頁面默認滾動，改用自定義容器 */
+            overflow: hidden;
+            /* 防止手機瀏覽器的雙擊縮放 */
+            touch-action: none;
+        }
+
+        /* 背景圖片容器 - 解決加載慢、亮度、滾動問題 */
+        .bg-container {
+            position: fixed;
             top: 0;
             left: 0;
+            width: 100vw;
+            height: 100vh;
+            /* 允許拖動滾動 */
+            overflow: auto;
+            /* 優化渲染性能 */
+            will-change: transform;
+        }
+
+        .bg-image {
+            display: block;
+            /* 圖片寬度固定為實際大小，保證完整顯示 */
             width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            z-index: 0;
+            /* 提高亮度與對比度，解決畫面偏暗問題 */
+            filter: brightness(1.3) contrast(1.1);
+            /* 強制圖片快速加載，禁用延遲加載 */
+            loading: eager;
+            /* 防止圖片被縮放壓縮 */
+            image-rendering: crisp-edges;
         }
-        .content {
-            position: relative;
-            z-index: 1;
-            padding-top: 100px;
-        }
-        .shake-title {
-            font-size: 3em;
-            animation: shake 0.1s infinite;
+
+        /* 固定文字層 - 解決文字亂跑問題 */
+        .text-layer {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            /* 文字層永遠在最上層 */
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            text-align: center;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
         }
-        @keyframes shake {
-            0% { transform: translateX(0); }
-            25% { transform: translateX(-3px) rotate(-1deg); }
-            50% { transform: translateX(3px) rotate(1deg); }
-            75% { transform: translateX(-3px) rotate(-1deg); }
-            100% { transform: translateX(3px) rotate(1deg); }
+
+        /* 預加載樣式，避免圖片加載閃爍 */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
-        .text {
-            font-size: 1.5em;
-            margin: 20px 0;
-            text-shadow: 1px 1px 3px rgba(0,0,0,0.8);
+        .bg-image {
+            animation: fadeIn 0.3s ease-in;
         }
-        .vme50 {
-            font-size: 2em;
-            color: #ff4444;
-            font-weight: bold;
+
+        /* 文字樣式 */
+        .title {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        .dots {
+            font-size: 2.5rem;
+            letter-spacing: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        .symbols {
+            font-size: 1.5rem;
+            line-height: 2;
+            margin-bottom: 1rem;
+        }
+        .subtitle {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+        }
+        .ababa {
+            font-size: 1.5rem;
+            line-height: 1.5;
+            margin-bottom: 1.5rem;
+        }
+        .call-to-action {
+            font-size: 2.2rem;
+            color: #ff3333;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
         }
     </style>
 </head>
 <body>
-    <div class="overlay"></div>
-    <div class="content">
-        <h1 class="shake-title">沒錢啦！！！！！！！！！！！！</h1>
-        <p class="text">૮ o̴̶̷᷄ ·̫ o̴̶̷̥᷅ ა૮ o̴̶̷᷄ ·̫ o̴̶̷̥᷅ ა૮ o̴̶̷᷄ ·̫ o̴̶̷̥᷅ ა૮ o̴̶̷᷄ ·̫ o̴̶̷̥᷅ ა</p>
-        <p class="text">給點東西吃吧</p>
-        <p class="text">阿巴阿巴阿巴阿巴阿巴阿巴阿巴阿巴阿巴阿巴阿巴阿巴阿巴阿巴</p>
-        <p class="vme50">V我50！V我50V我50！V我50！V我50！V我50！</p>
+    <!-- 背景圖片容器 -->
+    <div class="bg-container">
+        <!-- 把你的圖片路徑改成你實際的檔案路徑！ -->
+        <img src="你的畫.png" alt="背景畫作" class="bg-image">
     </div>
+
+    <!-- 固定文字層 -->
+    <div class="text-layer">
+        <div class="title">沒錢</div>
+        <div class="dots">！！！！！！！！！！</div>
+        <div class="symbols">
+            <span>∠○</span><br>
+            <span>○  つく○</span><br>
+            <span>○  つく○</span><br>
+            <span>つく○  ○  づ</span>
+        </div>
+        <div class="subtitle">給點東西吃吧</div>
+        <div class="ababa">
+            阿巴阿巴阿巴阿巴阿巴阿巴阿巴阿巴阿巴阿巴阿巴<br>
+            阿巴阿巴阿巴阿巴阿巴
+        </div>
+        <div class="call-to-action">
+            V我50！V我50V我50！V我50！V我50！V我50！
+        </div>
+    </div>
+
+    <script>
+        // 優化拖動體驗，解決手機上滾動卡頓問題
+        const container = document.querySelector('.bg-container');
+        let isDragging = false;
+        let startX, startY, scrollLeft, scrollTop;
+
+        container.addEventListener('mousedown', (e) => {
+            isDragging = true;
+            startX = e.pageX - container.offsetLeft;
+            startY = e.pageY - container.offsetTop;
+            scrollLeft = container.scrollLeft;
+            scrollTop = container.scrollTop;
+        });
+
+        container.addEventListener('mouseleave', () => {
+            isDragging = false;
+        });
+
+        container.addEventListener('mouseup', () => {
+            isDragging = false;
+        });
+
+        container.addEventListener('mousemove', (e) => {
+            if (!isDragging) return;
+            e.preventDefault();
+            const x = e.pageX - container.offsetLeft;
+            const y = e.pageY - container.offsetTop;
+            const walkX = (x - startX) * 1.5;
+            const walkY = (y - startY) * 1.5;
+            container.scrollLeft = scrollLeft - walkX;
+            container.scrollTop = scrollTop - walkY;
+        });
+
+        // 手機觸控滾動優化
+        container.addEventListener('touchstart', (e) => {
+            startX = e.touches[0].pageX;
+            startY = e.touches[0].pageY;
+            scrollLeft = container.scrollLeft;
+            scrollTop = container.scrollTop;
+        });
+
+        container.addEventListener('touchmove', (e) => {
+            const x = e.touches[0].pageX;
+            const y = e.touches[0].pageY;
+            const walkX = (x - startX) * 1.5;
+            const walkY = (y - startY) * 1.5;
+            container.scrollLeft = scrollLeft - walkX;
+            container.scrollTop = scrollTop - walkY;
+        });
+    </script>
 </body>
 </html>
