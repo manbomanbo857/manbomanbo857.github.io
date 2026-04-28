@@ -25,13 +25,17 @@
             100% { background-position: 0% 50%; }
         }
 
-        /* 背景插圖 正常顯示不做任何混合模式 */
+        /* 背景插圖固定在頂部，不往下推動頁面 */
         .bg-img {
             width: 100%;
             display: block;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 1;
         }
 
-        /* 底部所有內容固定在最上層 */
+        /* 底部所有內容固定在最上層，絕對可見 */
         .footer-box {
             position: fixed;
             bottom: 5vh;
@@ -41,7 +45,8 @@
             flex-direction: column;
             align-items: center;
             gap: 1rem;
-            z-index: 10;
+            z-index: 9999;
+            pointer-events: none;
         }
 
         .qr-code {
@@ -49,6 +54,7 @@
             height: 150px;
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0,0,0,0.3);
+            pointer-events: auto;
         }
 
         /* 聽歌提示文字 */
@@ -112,7 +118,7 @@
 </head>
 <body>
 
-<!-- 背景插圖 正常顯示 -->
+<!-- 背景插圖固定在頂部 -->
 <img src="Image_1777219587636_682 (3).webp" class="bg-img">
 
 <!-- 音樂播放器 -->
@@ -120,7 +126,7 @@
     <source src="https://raw.githubusercontent.com/manbomanbo857/manbomanbo857.github.io/main/evening.mp3" type="audio/mpeg">
 
 
-<!-- 底部全部文字+二維碼 -->
+<!-- 底部所有文字+二維碼，固定在最上層 -->
 <div class="footer-box">
     <img src="mm_facetoface_collect_qrcode_1777306294962_edit_4222158339459.png" class="qr-code">
     <div class="hint-text">～點擊屏幕聽歌～</div>
