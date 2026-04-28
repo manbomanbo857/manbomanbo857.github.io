@@ -15,6 +15,17 @@
         body {
             overflow: hidden;
             touch-action: none;
+            /* 新增：紅白藍三色動態漸變背景 */
+            background: linear-gradient(-45deg, #ff4444, #ffffff, #4488ff);
+            background-size: 400% 400%;
+            animation: gradientShift 12s ease infinite;
+        }
+
+        /* 新增：背景漸變動畫（速度剛好，不快不慢） */
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
 
         /* 背景圖片容器 */
@@ -26,6 +37,8 @@
             height: 100vh;
             overflow: auto;
             will-change: transform;
+            /* 讓圖片透明背景和漸變融合 */
+            background-color: transparent;
         }
 
         .bg-image {
@@ -35,6 +48,8 @@
             loading: eager;
             image-rendering: crisp-edges;
             animation: fadeIn 0.3s ease-in;
+            /* 讓線稿和背景融合更自然 */
+            mix-blend-mode: multiply;
         }
 
         @keyframes fadeIn {
@@ -67,9 +82,11 @@
             /* 加上輕微陰影，讓二維碼更突出 */
             box-shadow: 0 0 10px rgba(0,0,0,0.3);
             pointer-events: auto; /* 讓用戶可以點擊/長按保存二維碼 */
+            /* 讓二維碼不受圖片融合影響 */
+            mix-blend-mode: normal;
         }
 
-        /* 第一行：mabomanbo */
+        /* 第一行：啊啊啊啊啊啊沒錢啦！ */
         .shake-text {
             font-size: 2.5rem;
             font-weight: 900;
@@ -86,7 +103,7 @@
             100% { transform: translate(-8px, -8px) rotate(-3deg); }
         }
 
-        /* 第二行：阿巴阿巴 */
+        /* 第二行：都給我去玩喵斯！ */
         .muse-text {
             font-size: 2rem;
             font-weight: bold;
@@ -94,7 +111,7 @@
             text-shadow: 2px 2px 0 #000;
         }
 
-        /* 第三行：我是傻逼 */
+        /* 第三行：順便V我50～ */
         .vme-text {
             font-size: 1.8rem;
             font-weight: bold;
@@ -128,7 +145,7 @@
     </div>
 
     <script>
-        // 66666一直報錯
+        // 拖動滾動邏輯
         const container = document.querySelector('.bg-container');
         let isDragging = false;
         let startX, startY, scrollLeft, scrollTop;
@@ -155,7 +172,7 @@
             container.scrollTop = scrollTop - walkY;
         });
 
-        // 好無聊啊啊啊啊啊啊不想寫啦！
+        // 觸控滾動邏輯
         container.addEventListener('touchstart', (e) => {
             startX = e.touches[0].pageX;
             startY = e.touches[0].pageY;
