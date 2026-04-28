@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>沒錢啦！！！</title>
     <style>
+        /* 全局重置 */
         * {
             margin: 0;
             padding: 0;
@@ -12,133 +13,176 @@
         }
 
         body {
+            overflow-x: hidden;
+            overflow-y: auto;
+            touch-action: none;
+            /* 日系溫柔軟色調：奶油米白 + 淺櫻粉 + 薄荷淺綠 + 天空淺藍 */
             background: linear-gradient(-45deg, #fef6e7, #fadadd, #d4edda, #cce7f5);
             background-size: 400% 400%;
+            /* 速度再加快，4秒循環，流動感剛剛好不無聊、不刺眼 */
             animation: gradientShift 4s ease infinite;
             min-height: 100vh;
-            overflow-x: hidden;
         }
 
+        /* 背景漸變動畫 */
         @keyframes gradientShift {
             0% { background-position: 0% 50%; }
             50% { background-position: 100% 50%; }
             100% { background-position: 0% 50%; }
         }
 
-        /* 限制插圖高度，不會把文字頂出去 */
-        .artwork {
-            width: 100%;
-            max-height: 85vh;
-            object-fit: cover;
-            display: block;
+        /* 背景圖片容器 */
+        .bg-container {
+            position: relative;
+            width: 100vw;
+            overflow: auto;
+            will-change: transform;
+            background-color: transparent;
         }
 
-        /* 底部UI固定在最底、最上層 */
-        .bottom-ui {
-            position: fixed;
-            bottom: 2vh;
-            left: 0;
+        .bg-image {
+            display: block;
             width: 100%;
+            filter: brightness(1.3) contrast(1.1);
+            loading: eager;
+            image-rendering: crisp-edges;
+            animation: fadeIn 0.3s ease-in;
+            mix-blend-mode: multiply;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* 固定文字與二維碼層 */
+        .bottom-layer {
+            position: fixed;
+            bottom: 5vh;
+            left: 0;
+            width: 100vw;
+            pointer-events: none;
+            z-index: 9999;
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 0.8rem;
-            z-index: 99999;
-            pointer-events: none;
+            justify-content: center;
+            text-align: center;
+            gap: 1rem;
+            padding: 0 1rem;
         }
 
+        /* 二維碼樣式 */
         .qr-code {
             width: 150px;
             height: 150px;
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0,0,0,0.3);
             pointer-events: auto;
+            mix-blend-mode: normal;
         }
 
-        .hint {
-            font-family: "Comic Sans MS", sans-serif;
-            font-size: 1.4rem;
-            font-weight: 600;
-            background: linear-gradient(90deg, #ff7eb3, #74b9ff, #ffe082);
-            background-size: 300% 300%;
-            -webkit-background-clip: text;
-            color: transparent;
-            animation: textColor 3s ease infinite, bounce 2.5s ease-in-out infinite;
-        }
-
-        @keyframes textColor {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        @keyframes bounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-3px); }
-        }
-
-        .text1 {
+        /* 第一行：啊啊啊啊啊啊沒錢啦！ */
+        .shake-text {
             font-size: 2.5rem;
             font-weight: 900;
             color: #ff3333;
-            text-shadow: 3px 3px 0 #000;
-            animation: shake 0.15s infinite alternate;
+            text-shadow: 3px 3px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000;
+            animation: bigShake 0.15s infinite alternate;
         }
 
-        @keyframes shake {
-            0% { transform: translate(-6px, -6px) rotate(-2deg); }
-            100% { transform: translate(6px, 6px) rotate(2deg); }
+        @keyframes bigShake {
+            0% { transform: translate(-8px, -8px) rotate(-3deg); }
+            25% { transform: translate(8px, 8px) rotate(3deg); }
+            50% { transform: translate(-8px, 8px) rotate(-3deg); }
+            75% { transform: translate(8px, -8px) rotate(3deg); }
+            100% { transform: translate(-8px, -8px) rotate(-3deg); }
         }
 
-        .text2 {
+        /* 第二行：都給我去玩喵斯！ */
+        .muse-text {
             font-size: 2rem;
+            font-weight: bold;
             color: #ff9900;
-            font-weight: bold;
             text-shadow: 2px 2px 0 #000;
         }
 
-        .text3 {
+        /* 第三行：順便V我50～ */
+        .vme-text {
             font-size: 1.8rem;
-            color: #33ccff;
             font-weight: bold;
+            color: #33ccff;
             text-shadow: 2px 2px 0 #000;
         }
 
+        /* 手機適配 */
         @media (max-width: 600px) {
-            .text1 { font-size: 1.8rem; }
-            .text2 { font-size: 1.5rem; }
-            .text3 { font-size: 1.3rem; }
-            .hint { font-size: 1.1rem; }
+            .shake-text { font-size: 1.8rem; }
+            .muse-text { font-size: 1.5rem; }
+            .vme-text { font-size: 1.3rem; }
             .qr-code { width: 120px; height: 120px; }
-            .artwork { max-height: 78vh; }
         }
     </style>
 </head>
 <body>
+    <!-- 背景圖片容器 -->
+    <div class="bg-container">
+        <img src="Image_1777219587636_682 (3).webp" alt="背景畫作" class="bg-image">
+    </div>
 
-    <!-- 絕對路徑 背景插圖 -->
-    <img src="https://manbomanbo857.github.io/Image_1777219587636_682 (3).webp" class="artwork">
-
-    <!-- 音樂換成穩定 Pages 絕對路徑 -->
-    <audio id="bgm" loop preload="auto">
-        <source src="https://manbomanbo857.github.io/evening.mp3" type="audio/mpeg">
-    
-
-    <!-- 底部所有內容 -->
-    <div class="bottom-ui">
-        <img src="https://manbomanbo857.github.io/mm_facetoface_collect_qrcode_1777306294962_edit_4222158339459.png" class="qr-code">
-        <div class="hint">～點擊屏幕聽歌～</div>
-        <div class="text1">啊啊啊啊啊啊沒錢啦！</div>
-        <div class="text2">都給我去玩喵斯！</div>
-        <div class="text3">順便V我50～</div>
+    <!-- 底部固定文字與二維碼層 -->
+    <div class="bottom-layer">
+        <img src="mm_facetoface_collect_qrcode_1777306294962_edit_4222158339459.png" alt="贊助二維碼" class="qr-code">
+        
+        <div class="shake-text">啊啊啊啊啊啊沒錢啦！</div>
+        <div class="muse-text">都給我去玩喵斯！</div>
+        <div class="vme-text">順便V我50～</div>
     </div>
 
     <script>
-        const music = document.getElementById('bgm');
-        document.addEventListener('click', () => {
-            music.play();
-        }, { once: true });
-    </script>
+        // 拖動滾動邏輯
+        const container = document.querySelector('.bg-container');
+        let isDragging = false;
+        let startX, startY, scrollLeft, scrollTop;
 
+        container.addEventListener('mousedown', (e) => {
+            isDragging = true;
+            startX = e.pageX - container.offsetLeft;
+            startY = e.pageY - container.offsetTop;
+            scrollLeft = container.scrollLeft;
+            scrollTop = container.scrollTop;
+        });
+
+        container.addEventListener('mouseleave', () => isDragging = false);
+        container.addEventListener('mouseup', () => isDragging = false);
+
+        container.addEventListener('mousemove', (e) => {
+            if (!isDragging) return;
+            e.preventDefault();
+            const x = e.pageX - container.offsetLeft;
+            const y = e.pageY - container.offsetTop;
+            const walkX = (x - startX) * 1.5;
+            const walkY = (y - startY) * 1.5;
+            container.scrollLeft = scrollLeft - walkX;
+            container.scrollTop = scrollTop - walkY;
+        });
+
+        // 觸控滾動邏輯
+        container.addEventListener('touchstart', (e) => {
+            startX = e.touches[0].pageX;
+            startY = e.touches[0].pageY;
+            scrollLeft = container.scrollLeft;
+            scrollTop = container.scrollTop;
+        });
+
+        container.addEventListener('touchmove', (e) => {
+            const x = e.touches[0].pageX;
+            const y = e.touches[0].pageY;
+            const walkX = (x - startX) * 1.5;
+            const walkY = (y - startY) * 1.5;
+            container.scrollLeft = scrollLeft - walkX;
+            container.scrollTop = scrollTop - walkY;
+        });
+    </script>
 </body>
 </html>
