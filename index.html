@@ -16,21 +16,22 @@
             overflow-x: hidden;
             overflow-y: auto;
             touch-action: none;
-            /* 紅白藍三色動態漸變背景 */
-            background: linear-gradient(-45deg, #ff4444, #ffffff, #4488ff);
+            /* 新配色：粉紫/桃紅/青藍/薄荷綠，和你的線稿紫色超搭 */
+            background: linear-gradient(-45deg, #ff6b9d, #c44569, #6c5ce7, #48dbfb);
             background-size: 400% 400%;
-            animation: gradientShift 12s ease infinite;
+            /* 速度加快到 6 秒一個循環，比原來快一倍，又不會晃眼 */
+            animation: gradientShift 6s ease infinite;
             min-height: 100vh;
         }
 
-        /* 背景漸變動畫（速度剛好，不快不慢） */
+        /* 背景漸變動畫 */
         @keyframes gradientShift {
             0% { background-position: 0% 50%; }
             50% { background-position: 100% 50%; }
             100% { background-position: 0% 50%; }
         }
 
-        /* 背景圖片容器：不再蓋住整個螢幕，改成自適應高度 */
+        /* 背景圖片容器 */
         .bg-container {
             position: relative;
             width: 100vw;
@@ -46,7 +47,6 @@
             loading: eager;
             image-rendering: crisp-edges;
             animation: fadeIn 0.3s ease-in;
-            /* 讓線稿和背景融合更自然，白色部分會透出漸變 */
             mix-blend-mode: multiply;
         }
 
