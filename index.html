@@ -12,8 +12,6 @@
         }
 
         body {
-            margin: 0;
-            padding: 0;
             background: linear-gradient(-45deg, #fef6e7, #fadadd, #d4edda, #cce7f5);
             background-size: 400% 400%;
             animation: gradientShift 4s ease infinite;
@@ -27,27 +25,26 @@
             100% { background-position: 0% 50%; }
         }
 
-        /* 1. 背景插圖：只放在頂部，不會覆蓋整個頁面 */
+        /* 限制插圖高度，不會把文字頂出去 */
         .artwork {
             width: 100%;
+            max-height: 85vh;
+            object-fit: cover;
             display: block;
-            margin: 0 auto;
-            /* 關鍵：用 opacity 控制，避免完全不透明 */
-            opacity: 0.9;
         }
 
-        /* 2. 底部固定區域：絕對置頂，永遠在最前面 */
+        /* 底部UI固定在最底、最上層 */
         .bottom-ui {
             position: fixed;
-            bottom: 5vh;
+            bottom: 2vh;
             left: 0;
             width: 100%;
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 1rem;
-            z-index: 99999; /* 極高層級，壓過所有東西 */
-            pointer-events: none; /* 不影響點擊播放音樂 */
+            gap: 0.8rem;
+            z-index: 99999;
+            pointer-events: none;
         }
 
         .qr-code {
@@ -55,10 +52,9 @@
             height: 150px;
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0,0,0,0.3);
-            pointer-events: auto; /* 唯獨二維碼可點擊 */
+            pointer-events: auto;
         }
 
-        /* 提示文字 */
         .hint {
             font-family: "Comic Sans MS", sans-serif;
             font-size: 1.4rem;
@@ -81,7 +77,6 @@
             50% { transform: translateY(-3px); }
         }
 
-        /* 文字特效 */
         .text1 {
             font-size: 2.5rem;
             font-weight: 900;
@@ -109,29 +104,29 @@
             text-shadow: 2px 2px 0 #000;
         }
 
-        /* 手機適配 */
         @media (max-width: 600px) {
             .text1 { font-size: 1.8rem; }
             .text2 { font-size: 1.5rem; }
             .text3 { font-size: 1.3rem; }
             .hint { font-size: 1.1rem; }
             .qr-code { width: 120px; height: 120px; }
+            .artwork { max-height: 78vh; }
         }
     </style>
 </head>
 <body>
 
-    <!-- 1. 頂部插圖 -->
-    <img src="Image_1777219587636_682 (3).webp" class="artwork">
+    <!-- 絕對路徑 背景插圖 -->
+    <img src="https://manbomanbo857.github.io/Image_1777219587636_682 (3).webp" class="artwork">
 
-    <!-- 2. 背景音樂 -->
+    <!-- 音樂換成穩定 Pages 絕對路徑 -->
     <audio id="bgm" loop preload="auto">
-        <source src="https://raw.githubusercontent.com/manbomanbo857/manbomanbo857.github.io/main/evening.mp3" type="audio/mpeg">
+        <source src="https://manbomanbo857.github.io/evening.mp3" type="audio/mpeg">
     
 
-    <!-- 3. 底部文字+二維碼（永遠在最前面） -->
+    <!-- 底部所有內容 -->
     <div class="bottom-ui">
-        <img src="mm_facetoface_collect_qrcode_1777306294962_edit_4222158339459.png" class="qr-code">
+        <img src="https://manbomanbo857.github.io/mm_facetoface_collect_qrcode_1777306294962_edit_4222158339459.png" class="qr-code">
         <div class="hint">～點擊屏幕聽歌～</div>
         <div class="text1">啊啊啊啊啊啊沒錢啦！</div>
         <div class="text2">都給我去玩喵斯！</div>
@@ -139,7 +134,6 @@
     </div>
 
     <script>
-        // 點擊播放音樂
         const music = document.getElementById('bgm');
         document.addEventListener('click', () => {
             music.play();
