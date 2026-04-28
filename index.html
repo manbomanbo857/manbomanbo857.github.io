@@ -13,31 +13,29 @@
         }
 
         body {
-            overflow: hidden;
+            overflow-x: hidden;
+            overflow-y: auto;
             touch-action: none;
-            /* 新增：紅白藍三色動態漸變背景 */
+            /* 紅白藍三色動態漸變背景 */
             background: linear-gradient(-45deg, #ff4444, #ffffff, #4488ff);
             background-size: 400% 400%;
             animation: gradientShift 12s ease infinite;
+            min-height: 100vh;
         }
 
-        /* 新增：背景漸變動畫（速度剛好，不快不慢） */
+        /* 背景漸變動畫（速度剛好，不快不慢） */
         @keyframes gradientShift {
             0% { background-position: 0% 50%; }
             50% { background-position: 100% 50%; }
             100% { background-position: 0% 50%; }
         }
 
-        /* 背景圖片容器 */
+        /* 背景圖片容器：不再蓋住整個螢幕，改成自適應高度 */
         .bg-container {
-            position: fixed;
-            top: 0;
-            left: 0;
+            position: relative;
             width: 100vw;
-            height: 100vh;
             overflow: auto;
             will-change: transform;
-            /* 讓圖片透明背景和漸變融合 */
             background-color: transparent;
         }
 
@@ -48,7 +46,7 @@
             loading: eager;
             image-rendering: crisp-edges;
             animation: fadeIn 0.3s ease-in;
-            /* 讓線稿和背景融合更自然 */
+            /* 讓線稿和背景融合更自然，白色部分會透出漸變 */
             mix-blend-mode: multiply;
         }
 
@@ -79,10 +77,8 @@
             width: 150px;
             height: 150px;
             border-radius: 10px;
-            /* 加上輕微陰影，讓二維碼更突出 */
             box-shadow: 0 0 10px rgba(0,0,0,0.3);
-            pointer-events: auto; /* 讓用戶可以點擊/長按保存二維碼 */
-            /* 讓二維碼不受圖片融合影響 */
+            pointer-events: auto;
             mix-blend-mode: normal;
         }
 
@@ -136,7 +132,6 @@
 
     <!-- 底部固定文字與二維碼層 -->
     <div class="bottom-layer">
-        <!-- 二維碼放在最上面，在畫和文字之間 -->
         <img src="mm_facetoface_collect_qrcode_1777306294962_edit_4222158339459.png" alt="贊助二維碼" class="qr-code">
         
         <div class="shake-text">啊啊啊啊啊啊沒錢啦！</div>
