@@ -16,10 +16,9 @@
             overflow-x: hidden;
             overflow-y: auto;
             touch-action: none;
-            /* 日系溫柔軟色調：奶油米白 + 淺櫻粉 + 薄荷淺綠 + 天空淺藍 */
+            /* 日系溫柔軟色調 */
             background: linear-gradient(-45deg, #fef6e7, #fadadd, #d4edda, #cce7f5);
             background-size: 400% 400%;
-            /* 速度再加快，4秒循環，流動感剛剛好不無聊、不刺眼 */
             animation: gradientShift 4s ease infinite;
             min-height: 100vh;
         }
@@ -82,7 +81,33 @@
             mix-blend-mode: normal;
         }
 
-        /* 第一行：啊啊啊啊啊啊沒錢啦！ */
+        /* 新增：點擊屏幕聽歌 提示文字 */
+        .tip-text {
+            font-family: "Comic Sans MS", "微軟正黑體", sans-serif;
+            font-size: 1.4rem;
+            font-weight: 600;
+            background: linear-gradient(90deg, #ff7eb3, #74b9ff, #ffe082, #abecd6);
+            background-size: 300% 300%;
+            -webkit-background-clip: text;
+            color: transparent;
+            animation: textColor 3s ease infinite, softShake 2.5s ease-in-out infinite;
+        }
+
+        /* 文字顏色流動漸變 */
+        @keyframes textColor {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* 輕微小抖動 */
+        @keyframes softShake {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-4px); }
+            100% { transform: translateY(0px); }
+        }
+
+        /* 第一行文字 */
         .shake-text {
             font-size: 2.5rem;
             font-weight: 900;
@@ -99,7 +124,7 @@
             100% { transform: translate(-8px, -8px) rotate(-3deg); }
         }
 
-        /* 第二行：都給我去玩喵斯！ */
+        /* 第二行文字 */
         .muse-text {
             font-size: 2rem;
             font-weight: bold;
@@ -107,7 +132,7 @@
             text-shadow: 2px 2px 0 #000;
         }
 
-        /* 第三行：順便V我50～ */
+        /* 第三行文字 */
         .vme-text {
             font-size: 1.8rem;
             font-weight: bold;
@@ -121,10 +146,17 @@
             .muse-text { font-size: 1.5rem; }
             .vme-text { font-size: 1.3rem; }
             .qr-code { width: 120px; height: 120px; }
+            .tip-text { font-size: 1.1rem; }
         }
     </style>
 </head>
 <body>
+
+    <!-- 背景音樂 循環播放 -->
+    <audio id="myBgm" loop preload="auto">
+        <source src="https://raw.githubusercontent.com/manbomanbo857/manbomanbo857.github.io/main/evening.mp3" type="audio/mpeg">
+    
+
     <!-- 背景圖片容器 -->
     <div class="bg-container">
         <img src="Image_1777219587636_682 (3).webp" alt="背景畫作" class="bg-image">
@@ -133,6 +165,8 @@
     <!-- 底部固定文字與二維碼層 -->
     <div class="bottom-layer">
         <img src="mm_facetoface_collect_qrcode_1777306294962_edit_4222158339459.png" alt="贊助二維碼" class="qr-code">
+
+        <div class="tip-text">～點擊屏幕聽歌～</div>
         
         <div class="shake-text">啊啊啊啊啊啊沒錢啦！</div>
         <div class="muse-text">都給我去玩喵斯！</div>
@@ -140,7 +174,7 @@
     </div>
 
     <script>
-        // 拖動滾動邏輯
+        // 保留原本全部拖動、觸控滾動代碼完全不動
         const container = document.querySelector('.bg-container');
         let isDragging = false;
         let startX, startY, scrollLeft, scrollTop;
@@ -183,6 +217,12 @@
             container.scrollLeft = scrollLeft - walkX;
             container.scrollTop = scrollTop - walkY;
         });
+
+        // 點擊頁面觸發音樂播放（只觸發一次）
+        const audio = document.getElementById('myBgm');
+        document.addEventListener('click', function(){
+            audio.play();
+        }, {once:true});
     </script>
 </body>
 </html>
