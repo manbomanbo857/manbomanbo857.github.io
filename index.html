@@ -30,13 +30,17 @@
             100% { background-position: 0% 50%; }
         }
 
-        /* 背景圖片容器 */
+        /* 背景圖片容器：改成固定定位，蓋住背景但不影響文字 */
         .bg-container {
-            position: relative;
+            position: fixed;
+            top: 0;
+            left: 0;
             width: 100vw;
+            height: 100vh;
             overflow: auto;
             will-change: transform;
             background-color: transparent;
+            z-index: 1;
         }
 
         .bg-image {
@@ -46,15 +50,17 @@
             loading: eager;
             image-rendering: crisp-edges;
             animation: fadeIn 0.3s ease-in;
-            mix-blend-mode: multiply;
+            /* 關掉 multiply，改用 opacity 控制透明度，避免被背景吃掉 */
+            mix-blend-mode: normal;
+            opacity: 0.95;
         }
 
         @keyframes fadeIn {
             from { opacity: 0; }
-            to { opacity: 1; }
+            to { opacity: 0.95; }
         }
 
-        /* 固定文字與二維碼層 */
+        /* 固定文字與二維碼層：提高 z-index，確保在圖片上方 */
         .bottom-layer {
             position: fixed;
             bottom: 5vh;
