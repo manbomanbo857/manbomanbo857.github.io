@@ -12,11 +12,13 @@
         }
 
         body {
-            overflow-x: hidden;
+            margin: 0;
+            padding: 0;
             background: linear-gradient(-45deg, #fef6e7, #fadadd, #d4edda, #cce7f5);
             background-size: 400% 400%;
             animation: gradientShift 4s ease infinite;
             min-height: 100vh;
+            overflow-x: hidden;
         }
 
         @keyframes gradientShift {
@@ -25,18 +27,17 @@
             100% { background-position: 0% 50%; }
         }
 
-        /* 背景插圖固定在頂部，不往下推動頁面 */
-        .bg-img {
+        /* 1. 背景插圖：只放在頂部，不會覆蓋整個頁面 */
+        .artwork {
             width: 100%;
             display: block;
-            position: absolute;
-            top: 0;
-            left: 0;
-            z-index: 1;
+            margin: 0 auto;
+            /* 關鍵：用 opacity 控制，避免完全不透明 */
+            opacity: 0.9;
         }
 
-        /* 底部所有內容固定在最上層，絕對可見 */
-        .footer-box {
+        /* 2. 底部固定區域：絕對置頂，永遠在最前面 */
+        .bottom-ui {
             position: fixed;
             bottom: 5vh;
             left: 0;
@@ -45,8 +46,8 @@
             flex-direction: column;
             align-items: center;
             gap: 1rem;
-            z-index: 9999;
-            pointer-events: none;
+            z-index: 99999; /* 極高層級，壓過所有東西 */
+            pointer-events: none; /* 不影響點擊播放音樂 */
         }
 
         .qr-code {
@@ -54,11 +55,11 @@
             height: 150px;
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0,0,0,0.3);
-            pointer-events: auto;
+            pointer-events: auto; /* 唯獨二維碼可點擊 */
         }
 
-        /* 聽歌提示文字 */
-        .hint-text {
+        /* 提示文字 */
+        .hint {
             font-family: "Comic Sans MS", sans-serif;
             font-size: 1.4rem;
             font-weight: 600;
@@ -66,31 +67,32 @@
             background-size: 300% 300%;
             -webkit-background-clip: text;
             color: transparent;
-            animation: textFlow 3s ease infinite, lightShake 2.5s ease-in-out infinite;
+            animation: textColor 3s ease infinite, bounce 2.5s ease-in-out infinite;
         }
 
-        @keyframes textFlow {
-            0%{background-position:0% 50%;}
-            50%{background-position:100% 50%;}
-            100%{background-position:0% 50%;}
+        @keyframes textColor {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
 
-        @keyframes lightShake {
-            0%,100% { transform: translateY(0); }
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
             50% { transform: translateY(-3px); }
         }
 
+        /* 文字特效 */
         .text1 {
             font-size: 2.5rem;
             font-weight: 900;
             color: #ff3333;
             text-shadow: 3px 3px 0 #000;
-            animation: bigShake 0.15s infinite alternate;
+            animation: shake 0.15s infinite alternate;
         }
 
-        @keyframes bigShake {
-            0% { transform: translate(-6px,-6px) rotate(-2deg); }
-            100% { transform: translate(6px,6px) rotate(2deg); }
+        @keyframes shake {
+            0% { transform: translate(-6px, -6px) rotate(-2deg); }
+            100% { transform: translate(6px, 6px) rotate(2deg); }
         }
 
         .text2 {
@@ -107,41 +109,42 @@
             text-shadow: 2px 2px 0 #000;
         }
 
-        @media (max-width:600px){
-            .text1{font-size:1.8rem;}
-            .text2{font-size:1.5rem;}
-            .text3{font-size:1.3rem;}
-            .hint-text{font-size:1.1rem;}
-            .qr-code{width:120px;height:120px;}
+        /* 手機適配 */
+        @media (max-width: 600px) {
+            .text1 { font-size: 1.8rem; }
+            .text2 { font-size: 1.5rem; }
+            .text3 { font-size: 1.3rem; }
+            .hint { font-size: 1.1rem; }
+            .qr-code { width: 120px; height: 120px; }
         }
     </style>
 </head>
 <body>
 
-<!-- 背景插圖固定在頂部 -->
-<img src="Image_1777219587636_682 (3).webp" class="bg-img">
+    <!-- 1. 頂部插圖 -->
+    <img src="Image_1777219587636_682 (3).webp" class="artwork">
 
-<!-- 音樂播放器 -->
-<audio id="bgm" loop preload="auto">
-    <source src="https://raw.githubusercontent.com/manbomanbo857/manbomanbo857.github.io/main/evening.mp3" type="audio/mpeg">
+    <!-- 2. 背景音樂 -->
+    <audio id="bgm" loop preload="auto">
+        <source src="https://raw.githubusercontent.com/manbomanbo857/manbomanbo857.github.io/main/evening.mp3" type="audio/mpeg">
+    
 
+    <!-- 3. 底部文字+二維碼（永遠在最前面） -->
+    <div class="bottom-ui">
+        <img src="mm_facetoface_collect_qrcode_1777306294962_edit_4222158339459.png" class="qr-code">
+        <div class="hint">～點擊屏幕聽歌～</div>
+        <div class="text1">啊啊啊啊啊啊沒錢啦！</div>
+        <div class="text2">都給我去玩喵斯！</div>
+        <div class="text3">順便V我50～</div>
+    </div>
 
-<!-- 底部所有文字+二維碼，固定在最上層 -->
-<div class="footer-box">
-    <img src="mm_facetoface_collect_qrcode_1777306294962_edit_4222158339459.png" class="qr-code">
-    <div class="hint-text">～點擊屏幕聽歌～</div>
-    <div class="text1">啊啊啊啊啊啊沒錢啦！</div>
-    <div class="text2">都給我去玩喵斯！</div>
-    <div class="text3">順便V我50～</div>
-</div>
-
-<script>
-// 點擊頁面播放音樂
-let music = document.getElementById("bgm");
-document.addEventListener("click", ()=>{
-    music.play();
-}, {once:true});
-</script>
+    <script>
+        // 點擊播放音樂
+        const music = document.getElementById('bgm');
+        document.addEventListener('click', () => {
+            music.play();
+        }, { once: true });
+    </script>
 
 </body>
 </html>
