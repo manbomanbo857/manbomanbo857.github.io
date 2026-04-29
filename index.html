@@ -16,21 +16,22 @@
             overflow-x: hidden;
             overflow-y: auto;
             touch-action: none;
-            /* 紅白藍三色動態漸變背景 */
-            background: linear-gradient(-45deg, #ff4444, #ffffff, #4488ff);
-            background-size: 400% 400%;
-            animation: gradientShift 12s ease infinite;
+            /* 增加超多漸變色彩：紅、白、藍、紫、粉、淺青、橙 */
+            background: linear-gradient(-45deg, #ff4444, #ffffff, #4488ff, #a855f7, #ff77bb, #44ddcc, #ffaa33);
+            background-size: 500% 500%;
+            /* 加快漸變速度 原本12s 改成5s，流動感更強 */
+            animation: gradientShift 5s ease infinite;
             min-height: 100vh;
         }
 
-        /* 背景漸變動畫（速度剛好，不快不慢） */
+        /* 背景漸變動畫 */
         @keyframes gradientShift {
             0% { background-position: 0% 50%; }
             50% { background-position: 100% 50%; }
             100% { background-position: 0% 50%; }
         }
 
-        /* 背景圖片容器：不再蓋住整個螢幕，改成自適應高度 */
+        /* 背景圖片容器 */
         .bg-container {
             position: relative;
             width: 100vw;
@@ -46,7 +47,6 @@
             loading: eager;
             image-rendering: crisp-edges;
             animation: fadeIn 0.3s ease-in;
-            /* 讓線稿和背景融合更自然，白色部分會透出漸變 */
             mix-blend-mode: multiply;
         }
 
@@ -82,7 +82,7 @@
             mix-blend-mode: normal;
         }
 
-        /* 第一行：啊啊啊啊啊啊沒錢啦！ */
+        /* 第一行抖動文字 */
         .shake-text {
             font-size: 2.5rem;
             font-weight: 900;
@@ -99,7 +99,7 @@
             100% { transform: translate(-8px, -8px) rotate(-3deg); }
         }
 
-        /* 第二行：都給我去玩喵斯！ */
+        /* 第二行文字 */
         .muse-text {
             font-size: 2rem;
             font-weight: bold;
@@ -107,7 +107,7 @@
             text-shadow: 2px 2px 0 #000;
         }
 
-        /* 第三行：順便V我50～ */
+        /* 第三行文字 */
         .vme-text {
             font-size: 1.8rem;
             font-weight: bold;
@@ -179,7 +179,6 @@
             const x = e.touches[0].pageX;
             const y = e.touches[0].pageY;
             const walkX = (x - startX) * 1.5;
-            const walkY = (y - startY) * 1.5;
             container.scrollLeft = scrollLeft - walkX;
             container.scrollTop = scrollTop - walkY;
         });
