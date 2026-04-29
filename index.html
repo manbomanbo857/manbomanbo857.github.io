@@ -123,6 +123,24 @@
             .vme-text { font-size: 1.3rem; }
             .qr-code { width: 120px; height: 120px; }
         }
+
+        /* 音樂控制按鈕 */
+        .music-btn {
+            position: fixed;
+            top: 15px;
+            right: 15px;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+            z-index: 10000;
+            backdrop-filter: blur(5px);
+            pointer-events: auto;
+        }
     </style>
 </head>
 <body>
@@ -130,6 +148,11 @@
     <div class="bg-container">
         <img src="Image_1777219587636_682 (3).webp" alt="背景畫作" class="bg-image">
     </div>
+
+    <!-- 背景音樂（自動播放+循環） -->
+    <audio id="bgMusic" src="evening.mp3" loop preload="auto">
+    <!-- 音樂控制按鈕 -->
+    <button class="music-btn" id="musicToggle">🔊</button>
 
     <!-- 底部固定文字與二維碼層 -->
     <div class="bottom-layer">
@@ -183,6 +206,39 @@
             container.scrollLeft = scrollLeft - walkX;
             container.scrollTop = scrollTop - walkY;
         });
+
+        // 背景音樂控制邏輯
+        const bgMusic = document.getElementById('bgMusic');
+        const musicToggle = document.getElementById('musicToggle');
+        let isPlaying = false;
+
+        // 頁面首次互動後自動播放（解決瀏覽器限制）
+        document.addEventListener('click', () => {
+            if (!isPlaying) {
+                bgMusic.play().then(() => {
+                    isPlaying = true;
+                    musicToggle.textContent = '🔊';
+                }).catch(err => {
+                    console.log('自動播放被攔截，用戶需手動點擊按鈕播放');
+                });
+            }
+        }, { once: true });
+
+        // 手動控制播放/暫停
+        musicToggle.addEventListener('click', (e) => {
+            e.stopPropagation();
+            if (isPlaying) {
+                bgMusic.pause();
+                musicToggle.textContent = '🔇';
+            } else {
+                bgMusic.play();
+                musicToggle.textContent = '🔊';
+            }
+            isPlaying = !isPlaying;
+        });
+
+        // 預設音量 50%，避免太吵
+        bgMusic.volume = 0.5;
     </script>
 </body>
 </html>
