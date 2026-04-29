@@ -56,21 +56,34 @@
             to { opacity: 1; }
         }
 
-        /* 固定文字與二維碼層 */
-        .bottom-layer {
-            position: fixed;
-            bottom: 5vh;
-            left: 0;
+        /* 中間文字與二維碼層（新增） */
+        .content-layer {
+            position: relative;
             width: 100vw;
-            pointer-events: none;
-            z-index: 9999;
+            min-height: calc(100vh - 200px);
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             text-align: center;
             gap: 1rem;
-            padding: 0 1rem;
+            padding: 2rem 1rem;
+            pointer-events: none;
+            z-index: 999;
+        }
+
+        /* 輕微振動文字 */
+        .soft-shake-text {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #22d3ee;
+            text-shadow: 2px 2px 0 #000;
+            animation: softShake 0.3s infinite alternate;
+        }
+
+        @keyframes softShake {
+            0% { transform: translate(-2px, -2px) rotate(-1deg); }
+            100% { transform: translate(2px, 2px) rotate(1deg); }
         }
 
         /* 二維碼樣式 */
@@ -83,11 +96,11 @@
             mix-blend-mode: normal;
         }
 
-        /* 第一行抖動文字 适配冷色調改成淺藍發光風 */
+        /* 劇烈抖動文字 */
         .shake-text {
             font-size: 2.5rem;
             font-weight: 900;
-            color: #60a5fa;
+            color: #ff6b6b;
             text-shadow: 3px 3px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000;
             animation: bigShake 0.15s infinite alternate;
         }
@@ -100,28 +113,12 @@
             100% { transform: translate(-8px, -8px) rotate(-3deg); }
         }
 
-        /* 第二行文字 二次元青藍色 */
+        /* 喵斯文字 */
         .muse-text {
-            font-size: 2rem;
-            font-weight: bold;
-            color: #22d3ee;
-            text-shadow: 2px 2px 0 #000;
-        }
-
-        /* 第三行文字 夢幻霧紫色 */
-        .vme-text {
             font-size: 1.8rem;
             font-weight: bold;
-            color: #a78bfa;
+            color: #ffd460;
             text-shadow: 2px 2px 0 #000;
-        }
-
-        /* 手機適配 */
-        @media (max-width: 600px) {
-            .shake-text { font-size: 1.8rem; }
-            .muse-text { font-size: 1.5rem; }
-            .vme-text { font-size: 1.3rem; }
-            .qr-code { width: 120px; height: 120px; }
         }
 
         /* 音樂控制按鈕 */
@@ -141,6 +138,14 @@
             backdrop-filter: blur(5px);
             pointer-events: auto;
         }
+
+        /* 手機適配 */
+        @media (max-width: 600px) {
+            .soft-shake-text { font-size: 1.2rem; }
+            .shake-text { font-size: 1.8rem; }
+            .muse-text { font-size: 1.3rem; }
+            .qr-code { width: 120px; height: 120px; }
+        }
     </style>
 </head>
 <body>
@@ -149,19 +154,20 @@
         <img src="Image_1777219587636_682 (3).webp" alt="背景畫作" class="bg-image">
     </div>
 
+    <!-- 中間文字與二維碼區域（新增） -->
+    <div class="content-layer">
+        <div class="soft-shake-text">～點擊屏幕播放音樂喵～</div>
+        
+        <img src="mm_facetoface_collect_qrcode_1777306294962_edit_4222158339459.png" alt="贊助二維碼" class="qr-code">
+        
+        <div class="shake-text">啊啊啊啊啊啊！沒錢啦！？～</div>
+        <div class="muse-text">都給我去玩喵斯～順便V我50！</div>
+    </div>
+
     <!-- 背景音樂（自動播放+循環） -->
     <audio id="bgMusic" src="evening.mp3" loop preload="auto">
     <!-- 音樂控制按鈕 -->
     <button class="music-btn" id="musicToggle">🔊</button>
-
-    <!-- 底部固定文字與二維碼層 -->
-    <div class="bottom-layer">
-        <img src="mm_facetoface_collect_qrcode_1777306294962_edit_4222158339459.png" alt="贊助二維碼" class="qr-code">
-        
-        <div class="shake-text">啊啊啊啊啊啊沒錢啦！</div>
-        <div class="muse-text">都給我去玩喵斯！</div>
-        <div class="vme-text">順便V我50～</div>
-    </div>
 
     <script>
         // 拖動滾動邏輯
