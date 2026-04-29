@@ -16,11 +16,11 @@
             overflow-x: hidden;
             overflow-y: auto;
             touch-action: none;
-            /* 增加超多漸變色彩：紅、白、藍、紫、粉、淺青、橙 */
-            background: linear-gradient(-45deg, #ff4444, #ffffff, #4488ff, #a855f7, #ff77bb, #44ddcc, #ffaa33);
+            /* 二次元高級冷色漸變：夜空藍、冰藍、霧紫、淺青、銀灰、琉璃藍 */
+            background: linear-gradient(-45deg, #0f172a, #38bdf8, #8b5cf6, #22d3ee, #e2e8f0, #1d4ed8);
             background-size: 500% 500%;
-            /* 加快漸變速度 原本12s 改成5s，流動感更強 */
-            animation: gradientShift 5s ease infinite;
+            /* 加快流動速度 → 改成3秒，動感更強 */
+            animation: gradientShift 3s ease infinite;
             min-height: 100vh;
         }
 
@@ -43,11 +43,12 @@
         .bg-image {
             display: block;
             width: 100%;
-            filter: brightness(1.3) contrast(1.1);
+            filter: brightness(1.2) contrast(1.1);
             loading: eager;
             image-rendering: crisp-edges;
             animation: fadeIn 0.3s ease-in;
-            mix-blend-mode: multiply;
+            /* 冷色背景融合更自然 */
+            mix-blend-mode: screen;
         }
 
         @keyframes fadeIn {
@@ -77,16 +78,16 @@
             width: 150px;
             height: 150px;
             border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.3);
+            box-shadow: 0 0 15px rgba(100, 150, 255, 0.4);
             pointer-events: auto;
             mix-blend-mode: normal;
         }
 
-        /* 第一行抖動文字 */
+        /* 第一行抖動文字 适配冷色調改成淺藍發光風 */
         .shake-text {
             font-size: 2.5rem;
             font-weight: 900;
-            color: #ff3333;
+            color: #60a5fa;
             text-shadow: 3px 3px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000;
             animation: bigShake 0.15s infinite alternate;
         }
@@ -99,19 +100,19 @@
             100% { transform: translate(-8px, -8px) rotate(-3deg); }
         }
 
-        /* 第二行文字 */
+        /* 第二行文字 二次元青藍色 */
         .muse-text {
             font-size: 2rem;
             font-weight: bold;
-            color: #ff9900;
+            color: #22d3ee;
             text-shadow: 2px 2px 0 #000;
         }
 
-        /* 第三行文字 */
+        /* 第三行文字 夢幻霧紫色 */
         .vme-text {
             font-size: 1.8rem;
             font-weight: bold;
-            color: #33ccff;
+            color: #a78bfa;
             text-shadow: 2px 2px 0 #000;
         }
 
